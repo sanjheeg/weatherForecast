@@ -26,7 +26,7 @@ if option == "Sky":
     sky_conditions = [i["weather"][0]["main"] for i in filtered]
     images = {"Clear": "images/sun.png", "Clouds": "images/cloud.jpeg", "Rain": "images/rain.png", "Snow": "images/snow.png"}
     paths = [images[condition] for condition in sky_conditions]
-    sl.image(paths)
+    sl.image(paths, width =115)
 
 
 
