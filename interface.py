@@ -13,7 +13,7 @@ if len(place) == 0:
 
 sl.subheader(f"{option} for the next {days} days in {place}")
 
-filtered = get_data(place, days, option)
+filtered = get_data(place, days)
 
 if option == "Temperature":
     temp = [i["main"]["temp"] for i in filtered]
@@ -23,7 +23,11 @@ if option == "Temperature":
     sl.plotly_chart(figure)
 
 if option == "Sky":
-    filtered = [i["weather"][0]["main"] for i in filtered]
+    sky_conditions = [i["weather"][0]["main"] for i in filtered]
+    images = {"Clear": "images/sun.png", "Clouds": "images/cloud.jpeg", "Rain": "images/rain.png", "Snow": "images/snow.png"}
+    paths = [images[condition] for condition in sky_conditions]
+    sl.image(paths)
+
 
 
 
