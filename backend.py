@@ -6,7 +6,14 @@ def get_data(place, days, condition):
     url = f"http://api.openweathermap.org/data/2.5/forecast?q={place}&appid={api}"
     response = requests.get(url)
     data = response.json()
-    return data
+    filtered = data["list"][:(8 * days)]
+    # return data.keys()
+
+    if condition == "Temperature":
+        filtered = [i["main"]["temp"] for i in filtered]
+    else:
+        filtered = [i["weather"][0]["main"] for i in filtered]
+    return filtered
 
 
 if __name__ == "__main__":
