@@ -15,18 +15,21 @@ sl.subheader(f"{option} for the next {days} days in {place}")
 
 filtered = get_data(place, days)
 
-if option == "Temperature":
-    temp = [i["main"]["temp"] for i in filtered]
-    print(filtered)
-    dates = [i["dt_txt"] for i in filtered]
-    figure = px.line(x=dates, y=temp, labels={"x": "Date", "y": "Temperature (C)"})
-    sl.plotly_chart(figure)
+if filtered != "ERROR":
+    if option == "Temperature":
+        temp = [i["main"]["temp"] / 10 for i in filtered]
+        print(filtered)
+        dates = [i["dt_txt"] for i in filtered]
+        figure = px.line(x=dates, y=temp, labels={"x": "Date", "y": "Temperature (C)"})
+        sl.plotly_chart(figure)
 
-if option == "Sky":
-    sky_conditions = [i["weather"][0]["main"] for i in filtered]
-    images = {"Clear": "images/sun.png", "Clouds": "images/cloud.jpeg", "Rain": "images/rain.png", "Snow": "images/snow.png"}
-    paths = [images[condition] for condition in sky_conditions]
-    sl.image(paths, width =115)
+    if option == "Sky":
+        sky_conditions = [i["weather"][0]["main"] for i in filtered]
+        images = {"Clear": "images/sun.png", "Clouds": "images/cloud.jpeg", "Rain": "images/rain.png", "Snow": "images/snow.png"}
+        paths = [images[condition] for condition in sky_conditions]
+        sl.image(paths, width =115)
+else:
+    sl.subheader("the place does not exist!")
 
 
 

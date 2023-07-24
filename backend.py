@@ -6,7 +6,11 @@ def get_data(place, days):
     url = f"http://api.openweathermap.org/data/2.5/forecast?q={place}&appid={api}"
     response = requests.get(url)
     data = response.json()
-    filtered = data["list"][:(8*days)]
+    try:
+        filtered = data["list"][:(8*days)]
+    except KeyError:
+        filtered = "ERROR"
+
     return filtered
 
 
